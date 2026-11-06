@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Gowun Batang', serif;
+    --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+.font-serif {
+  font-family: 'Gowun Batang', serif;
+}
+
+.font-sans {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+}
+
+/* Authentic Hanji Paper Texture */
+.hanji-texture {
+  background-color: #FAF7F0;
+  background-image: 
+    radial-gradient(#E8DEC8 0.85px, transparent 0.85px),
+    radial-gradient(#DECDB3 0.65px, #FAF7F0 0.65px);
+  background-size: 22px 22px;
+  background-position: 0 0, 11px 11px;
+}
+
+/* Subtle Korean Hanok Window Lattice (창호살 격자) */
+.hanok-grid {
+  background-image: 
+    linear-gradient(to right, rgba(83, 66, 53, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(83, 66, 53, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Smooth Entrance */
+.fade-in {
+  animation: fadeIn 0.35s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 5s Watercolor Bloom inside Cup Liquid */
+@keyframes watercolorBloom {
+  0% {
+    transform: scale(0.2) translateY(24px);
+    opacity: 0.3;
+  }
+  45% {
+    transform: scale(0.9) translateY(4px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.4) translateY(-10px);
+    opacity: 0.95;
+  }
+}
+
+@keyframes watercolorBloomDelayed {
+  0% {
+    transform: scale(0.15) translateY(32px);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.35;
+  }
+  65% {
+    transform: scale(0.95) translateY(6px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.5) translateY(-16px);
+    opacity: 0.92;
+  }
+}
+
+@keyframes watercolorBloomAmbient {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0.9;
+  }
+}
+
+.tea-bloom {
+  animation: watercolorBloom 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.tea-bloom-delayed {
+  animation: watercolorBloomDelayed 5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.tea-bloom-ambient {
+  animation: watercolorBloomAmbient 5s ease-out forwards;
+}
+
+/* Cup remains stationary while teaspoon alone moves */
+
+/* Pouring Stream Animation for Honey and Condensed Milk */
+@keyframes pourStream {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    height: 90px;
+    opacity: 0.95;
+  }
+}
+
+.pour-stream {
+  animation: pourStream 0.5s ease-in-out infinite alternate;
+}

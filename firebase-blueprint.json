@@ -1,0 +1,99 @@
+{
+  "entities": {
+    "SurveyResponse": {
+      "title": "SurveyResponse",
+      "description": "백다담 팝업스토어 방문객 티 시음 설문 응답 레코드",
+      "type": "object",
+      "properties": {
+        "ageGroup": {
+          "type": "string",
+          "description": "방문객 연령대 (10대, 20대, 30대, 40대, 기타)",
+          "maxLength": 20
+        },
+        "occupation": {
+          "type": "string",
+          "description": "방문객 현재 신분 (학생, 직장인, 취업준비생, 자영업·프리랜서, 주부, 기타)",
+          "maxLength": 40
+        },
+        "taste": {
+          "type": "number",
+          "description": "완성된 티의 맛 만족도 (1~5)",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "convenience": {
+          "type": "number",
+          "description": "차고 간편성 만족도 (1~5)",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "dailyIntent": {
+          "type": "number",
+          "description": "일상/사무실 음용 의향 (1~5)",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "moment": {
+          "type": "string",
+          "description": "이 음료를 가장 마시고 싶은 순간",
+          "maxLength": 60
+        },
+        "selectedBase": {
+          "type": "string",
+          "description": "선택한 베이스 명칭",
+          "maxLength": 50
+        },
+        "selectedChago": {
+          "type": "string",
+          "description": "선택한 차고 명칭",
+          "maxLength": 50
+        },
+        "selectedTopping": {
+          "type": "string",
+          "description": "선택한 토핑 재료 명칭",
+          "maxLength": 50
+        },
+        "recipeTitle": {
+          "type": "string",
+          "description": "최종 완성된 나만의 레시피 명",
+          "maxLength": 100
+        },
+        "diagnosedType": {
+          "type": "string",
+          "description": "차고 기반 맞춤 피로해소 타입",
+          "maxLength": 100
+        },
+        "matchedTasting": {
+          "type": "string",
+          "description": "현장 매칭된 대표 시음 메뉴명",
+          "maxLength": 100
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "설문 제출 ISO 타임스탬프"
+        }
+      },
+      "required": [
+        "ageGroup",
+        "occupation",
+        "taste",
+        "convenience",
+        "dailyIntent",
+        "moment",
+        "recipeTitle",
+        "diagnosedType",
+        "matchedTasting",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/survey_responses/{responseId}": {
+      "schema": {
+        "$ref": "#/entities/SurveyResponse"
+      },
+      "description": "팝업스토어 방문객들이 QR 코드로 제출한 설문 응답 모음"
+    }
+  }
+}

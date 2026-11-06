@@ -1,0 +1,56 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net: Default-deny all unlisted paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Standalone Validation Blueprint for Baekdadam Survey Response
+    function isValidSurveyResponse(data) {
+      return data.keys().hasAll([
+               'ageGroup', 'occupation', 'taste', 'convenience', 
+               'dailyIntent', 'moment', 'recipeTitle', 'diagnosedType', 
+               'matchedTasting', 'createdAt'
+             ]) &&
+             data.keys().hasOnly([
+               'ageGroup', 'occupation', 'taste', 'convenience', 
+               'dailyIntent', 'moment', 'recipeTitle', 'diagnosedType', 
+               'matchedTasting', 'createdAt', 'selectedBase', 
+               'selectedChago', 'selectedTopping'
+             ]) &&
+             data.ageGroup is string && data.ageGroup.size() > 0 && data.ageGroup.size() <= 30 &&
+             data.occupation is string && data.occupation.size() > 0 && data.occupation.size() <= 50 &&
+             data.taste is int && data.taste >= 1 && data.taste <= 5 &&
+             data.convenience is int && data.convenience >= 1 && data.convenience <= 5 &&
+             data.dailyIntent is int && data.dailyIntent >= 1 && data.dailyIntent <= 5 &&
+             data.moment is string && data.moment.size() > 0 && data.moment.size() <= 80 &&
+             data.recipeTitle is string && data.recipeTitle.size() > 0 && data.recipeTitle.size() <= 120 &&
+             data.diagnosedType is string && data.diagnosedType.size() > 0 && data.diagnosedType.size() <= 120 &&
+             data.matchedTasting is string && data.matchedTasting.size() > 0 && data.matchedTasting.size() <= 120 &&
+             data.createdAt is string && data.createdAt.size() > 0 && data.createdAt.size() <= 60 &&
+             (!('selectedBase' in data) || (data.selectedBase is string && data.selectedBase.size() <= 60)) &&
+             (!('selectedChago' in data) || (data.selectedChago is string && data.selectedChago.size() <= 60)) &&
+             (!('selectedTopping' in data) || (data.selectedTopping is string && data.selectedTopping.size() <= 60));
+    }
+
+    // Survey Responses Collection
+    // Public visitors submitting through popup store QR code can append (create) a survey record with auto-generated ID.
+    // Reading, updating, or deleting survey responses is strictly denied to safeguard customer privacy and survey integrity.
+    match /survey_responses/{responseId} {
+      allow create: if isValidId(responseId) && isValidSurveyResponse(incoming());
+      allow read, update, delete: if false;
+    }
+  }
+}

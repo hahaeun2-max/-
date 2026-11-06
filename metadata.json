@@ -1,0 +1,6 @@
+{
+  "name": "나만의 한 잔, 백다담 | 티 키친 팝업",
+  "description": "한국 전통 차 브랜드 백다담(白茶談) 팝업스토어 전용 체험형 모바일 웹 미니게임. 차고 한 알을 직접 녹이고 나만의 티 레시피를 완성해보세요.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
